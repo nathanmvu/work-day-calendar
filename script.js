@@ -31,7 +31,8 @@ function addDate() {
 
 // Adds timeblocks to calendar
 function addBlock() {
-
+  let timeblock = document.createElement('div');
+  //container.push(timeblock);
 }
 
 // Changes timeblock color based on if it's in past, present, or future
@@ -45,3 +46,4 @@ function saveBlock() {
 }
 
 addDate();
+addBlock();
