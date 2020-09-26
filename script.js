@@ -1,18 +1,17 @@
-// TO-DO:
-// - Data needs to stay on page after being refreshed
-
+// Variables to access container and currentDay
 let container = document.getElementsByClassName('container');
 let currentDay = document.getElementById('currentDay');
-//console.log(currentHour);
 
 const defaultData = {
   data: [],
 };
 
+// Filling defaultData with empty strings for each time block
 for (let i = 0; i < 9; i++) {
   defaultData.data.push('');
 }
 
+// Update data in local storage
 const updateData = (i) => {
   const textArea = document.getElementById(i);
   const currentData = JSON.parse(window.localStorage.getItem('alldata'));
@@ -20,12 +19,13 @@ const updateData = (i) => {
   window.localStorage.setItem('alldata', JSON.stringify(currentData));
 };
 
+// Sets up content under the jumbotron
 const init = () => {
   const main = document.getElementById('main');
   const storedData = JSON.parse(window.localStorage.getItem('alldata'));
   let dataToUse = storedData || defaultData;
   
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < dataToUse.data.length; i++) {
     let hourNum = 9 + i; // 9 or 10 or 11 ...
     let hourStr = hourNum.toString();
     if (hourStr.length === 1) { // if single digit
@@ -34,6 +34,7 @@ const init = () => {
     const hour = moment('2013-02-08T' + hourStr).format('LT')
     const currentHour = moment().hour();
 
+    // Setting variable for changing timeblock color
     let colorClass = '';
     if(hourNum < currentHour) {
       colorClass = 'past';
@@ -43,6 +44,8 @@ const init = () => {
       colorClass = 'future';
     }
 
+    // Creating the timeblocks on the calendar
+    // Applies past,present,and future colors to appropriate timeblocks
     const timeBlock = document.createElement('div');
     timeBlock.innerHTML = `
       <div class="container time-block ${colorClass}">
@@ -52,7 +55,7 @@ const init = () => {
             class="col-9 w-100 description "
             id="${i}"
           >${dataToUse.data[i]}</textarea>
-          <div class="col-1 saveBtn" onClick="updateData(${i})"><i class="far fa-save"></i></div>
+          <div class="col-1 saveBtn" onClick="updateData(${i})"><i class="mt-4 fas fa-save fa-lg"></i></div>
         </div>
       </div>
     `;
